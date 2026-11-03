@@ -1,0 +1,250 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SmartCampus AI Dashboard</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;background:#f3f6fc;color:#1d2b43}
+.layout{display:flex;min-height:100vh}
+.sidebar{width:245px;background:#111e36;color:white;padding:25px 15px;flex-shrink:0}
+.brand{font-size:20px;font-weight:bold;padding:10px;margin-bottom:35px}
+.brand span{color:#68a4ff}
+.sidebar p{font-size:10px;color:#8292ad;margin:20px 10px 10px;letter-spacing:2px}
+.sidebar button{display:block;width:100%;padding:13px;border:0;background:transparent;color:#b9c5d8;text-align:left;border-radius:7px;margin:4px 0;cursor:pointer;font-size:14px}
+.sidebar button:hover,.sidebar button.active{background:#286bd0;color:white}
+.main{flex:1;min-width:0}
+.topbar{height:65px;background:white;display:flex;align-items:center;justify-content:space-between;padding:0 30px;border-bottom:1px solid #e5eaf2}
+.topbar span{color:#239d76;font-size:12px}
+.content{padding:30px}
+h1{font-size:26px;margin-bottom:9px}
+.subtitle{color:#8996a9;font-size:13px;margin-bottom:25px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:20px}
+.card,.panel{background:white;padding:20px;border-radius:11px;border:1px solid #e9edf4;box-shadow:0 2px 8px #14294c08}
+.card small{color:#8794a8}
+.card h2{font-size:28px;margin:13px 0;color:#253a59}
+.card em{color:#20a277;font-size:11px;font-style:normal}
+.grid{display:grid;grid-template-columns:1.5fr 1fr;gap:18px;margin-bottom:18px}
+.panel h3{font-size:15px;margin-bottom:17px}
+.panel p{font-size:12px;color:#8b98aa;margin-bottom:15px}
+.bar-row{display:flex;align-items:center;gap:12px;margin:16px 0;font-size:12px}
+.bar-row label{width:75px}
+.bar{height:9px;background:#edf1f8;border-radius:10px;flex:1;overflow:hidden}
+.bar i{display:block;height:100%;background:#3779dc;border-radius:10px}
+.bar-row b{width:35px;font-size:11px}
+.donut{width:150px;height:150px;margin:15px auto;border-radius:50%;background:conic-gradient(#3779dc 0 87.6%,#e9eef6 87.6%);display:grid;place-items:center}
+.donut div{background:white;border-radius:50%;width:115px;height:115px;display:grid;place-content:center;text-align:center}
+.donut strong{font-size:24px}
+.donut small{color:#8794a8}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th,td{text-align:left;padding:13px 9px;border-bottom:1px solid #edf0f5}
+th{color:#8996a9;font-size:10px}
+.status{background:#e6f7ef;color:#159568;padding:5px 9px;border-radius:15px}
+.warning{background:#fff0e9;color:#d46b4d;padding:5px 9px;border-radius:15px}
+.action{padding:10px 15px;background:#286bd0;color:white;border:0;border-radius:6px;cursor:pointer;margin-bottom:12px}
+input,select{padding:10px;border:1px solid #dce3ee;border-radius:6px;margin:5px;font-size:12px}
+.activity{padding:13px 0;border-bottom:1px solid #edf0f5;font-size:12px}
+.activity small{display:block;color:#929eaf;margin-top:5px}
+.page{display:none}
+.page.active{display:block}
+.ai-box{background:#eef4ff;padding:20px;border-radius:10px;margin-bottom:15px}
+.ai-box h3{color:#245cae}
+.alert{padding:13px;margin:10px 0;background:#fff7e9;border-radius:7px;font-size:12px}
+footer{padding:20px;color:#929eaf;font-size:11px}
+@media(max-width:850px){.stats{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}}
+@media(max-width:600px){.sidebar{width:65px;padding:15px 5px}.brand{font-size:0;padding:10px}.sidebar p{font-size:0}.sidebar button{font-size:0;text-align:center;padding:14px 3px}.sidebar button::first-letter{font-size:17px}.content{padding:15px}.topbar{padding:0 12px}.stats{gap:8px}.card{padding:12px}.card h2{font-size:21px}}
+</style>
+</head>
+<body>
+<div class="layout">
+
+<aside class="sidebar">
+<div class="brand">SmartCampus <span>AI ✦</span></div>
+<p>MAIN MENU</p>
+<button class="active" onclick="showPage('overview',this)">▦ Overview</button>
+<button onclick="showPage('students',this)">♙ Students</button>
+<button onclick="showPage('faculty',this)">♧ Faculty</button>
+<button onclick="showPage('attendance',this)">◷ Attendance</button>
+<button onclick="showPage('exams',this)">▤ Examinations</button>
+<p>CAMPUS SERVICES</p>
+<button onclick="showPage('library',this)">▣ Library</button>
+<button onclick="showPage('hostel',this)">⌂ Hostel</button>
+<button onclick="showPage('transport',this)">▰ Transport</button>
+<p>INTELLIGENCE</p>
+<button onclick="showPage('analytics',this)">✦ AI Analytics</button>
+<button onclick="showPage('assistant',this)">◉ AI Assistant</button>
+</aside>
+
+<main class="main">
+<header class="topbar">
+<strong>SmartCampus AI / University Dashboard</strong>
+<span>● System Operational &nbsp; | &nbsp; Admin</span>
+</header>
+
+<div class="content">
+
+<section id="overview" class="page active">
+<h1>Welcome to SmartCampus AI 👋</h1>
+<p class="subtitle">Intelligent university management at one place.</p>
+
+<div class="stats">
+<div class="card"><small>Total Students</small><h2>2,450</h2><em>↗ 8.2% growth</em></div>
+<div class="card"><small>Faculty Members</small><h2>186</h2><em>↗ 3.1% growth</em></div>
+<div class="card"><small>Average Attendance</small><h2>87.6%</h2><em>↗ 2.4% growth</em></div>
+<div class="card"><small>Active Courses</small><h2>64</h2><em>↗ 4 new courses</em></div>
+</div>
+
+<div class="grid">
+<div class="panel">
+<h3>Department Performance</h3>
+<p>Average academic scores</p>
+<div class="bar-row"><label>Computer Science</label><div class="bar"><i style="width:84%"></i></div><b>84%</b></div>
+<div class="bar-row"><label>Electronics</label><div class="bar"><i style="width:76%"></i></div><b>76%</b></div>
+<div class="bar-row"><label>Mechanical</label><div class="bar"><i style="width:72%"></i></div><b>72%</b></div>
+<div class="bar-row"><label>Information Tech</label><div class="bar"><i style="width:88%"></i></div><b>88%</b></div>
+</div>
+<div class="panel">
+<h3>Campus Attendance</h3>
+<div class="donut"><div><strong>87.6%</strong><small>Attendance</small></div></div>
+<p style="text-align:center">Present: 87.6% &nbsp; Absent: 12.4%</p>
+</div>
+</div>
+
+<div class="grid">
+<div class="panel">
+<h3>Recent Campus Activities</h3>
+<div class="activity">New student registration<small>10 minutes ago</small></div>
+<div class="activity">Examination timetable updated<small>35 minutes ago</small></div>
+<div class="activity">Library book returned<small>1 hour ago</small></div>
+<div class="activity">Hostel room allocation updated<small>2 hours ago</small></div>
+</div>
+<div class="panel">
+<h3>Smart Alerts</h3>
+<div class="alert">⚠ 24 students have attendance below 75%.</div>
+<div class="alert">📚 Mid-semester exams begin in 7 days.</div>
+<div class="alert">✓ Library inventory updated.</div>
+</div>
+</div>
+</section>
+
+<section id="students" class="page">
+<h1>Student Management</h1>
+<p class="subtitle">Manage student profiles and academic information.</p>
+<div class="panel">
+<button class="action" onclick="addStudent()">+ Add Student</button>
+<input id="studentName" placeholder="Enter student name">
+<input id="studentDept" placeholder="Department">
+<table><thead><tr><th>STUDENT ID</th><th>NAME</th><th>DEPARTMENT</th><th>STATUS</th></tr></thead>
+<tbody id="studentTable">
+<tr><td>SC001</td><td>Aarav Sharma</td><td>Computer Science</td><td><span class="status">Active</span></td></tr>
+<tr><td>SC002</td><td>Diya Reddy</td><td>Electronics</td><td><span class="status">Active</span></td></tr>
+<tr><td>SC003</td><td>Ishaan Kumar</td><td>Information Tech</td><td><span class="status">Active</span></td></tr>
+</tbody></table>
+</div>
+</section>
+
+<section id="faculty" class="page">
+<h1>Faculty Management</h1><p class="subtitle">Faculty profiles and department information.</p>
+<div class="panel"><h3>Faculty Directory</h3>
+<table><tr><th>NAME</th><th>DEPARTMENT</th><th>DESIGNATION</th></tr>
+<tr><td>Dr. Ananya Rao</td><td>Computer Science</td><td>Professor</td></tr>
+<tr><td>Prof. Vikram Singh</td><td>Electronics</td><td>Associate Professor</td></tr>
+<tr><td>Dr. Neha Shah</td><td>Mechanical</td><td>Professor</td></tr></table></div>
+</section>
+
+<section id="attendance" class="page">
+<h1>Attendance Management</h1><p class="subtitle">Monitor daily attendance and student participation.</p>
+<div class="stats"><div class="card"><small>Present Today</small><h2>2,146</h2></div><div class="card"><small>Absent Today</small><h2>304</h2></div><div class="card"><small>Below 75%</small><h2>24</h2></div><div class="card"><small>On Leave</small><h2>18</h2></div></div>
+<div class="panel"><h3>Attendance Records</h3><table><tr><th>STUDENT</th><th>ATTENDANCE</th><th>STATUS</th></tr><tr><td>Aarav Sharma</td><td>92%</td><td><span class="status">Good</span></td></tr><tr><td>Diya Reddy</td><td>68%</td><td><span class="warning">Low</span></td></tr><tr><td>Meera Patel</td><td>73%</td><td><span class="warning">Low</span></td></tr></table></div>
+</section>
+
+<section id="exams" class="page">
+<h1>Examination Management</h1><p class="subtitle">Exam schedules, marks and results.</p>
+<div class="panel"><h3>Upcoming Examinations</h3>
+<div class="activity">November 10 — Mid-semester examinations</div>
+<div class="activity">November 18 — Practical assessments</div>
+<div class="activity">December 02 — End-semester examinations</div>
+</div>
+</section>
+
+<section id="library" class="page">
+<h1>Library Management</h1><p class="subtitle">Manage books and library services.</p>
+<div class="stats"><div class="card"><small>Total Books</small><h2>18,420</h2></div><div class="card"><small>Books Issued</small><h2>1,284</h2></div><div class="card"><small>Overdue Books</small><h2>36</h2></div><div class="card"><small>New Arrivals</small><h2>128</h2></div></div>
+<div class="panel"><h3>Library Departments</h3><p>Computer Science · Electronics · Management · General Reading</p></div>
+</section>
+
+<section id="hostel" class="page">
+<h1>Hostel Management</h1><p class="subtitle">Room allocation and hostel occupancy.</p>
+<div class="stats"><div class="card"><small>Total Rooms</small><h2>620</h2></div><div class="card"><small>Occupied</small><h2>548</h2></div><div class="card"><small>Available</small><h2>72</h2></div><div class="card"><small>Occupancy</small><h2>88.4%</h2></div></div>
+<div class="panel"><h3>Hostel Blocks</h3>
+<div class="bar-row"><label>Block A</label><div class="bar"><i style="width:94%"></i></div><b>94%</b></div>
+<div class="bar-row"><label>Block B</label><div class="bar"><i style="width:86%"></i></div><b>86%</b></div>
+<div class="bar-row"><label>Block C</label><div class="bar"><i style="width:82%"></i></div><b>82%</b></div>
+</div></section>
+
+<section id="transport" class="page">
+<h1>Transportation Management</h1><p class="subtitle">Campus buses and route information.</p>
+<div class="stats"><div class="card"><small>Active Buses</small><h2>24</h2></div><div class="card"><small>Routes</small><h2>12</h2></div><div class="card"><small>Students</small><h2>860</h2></div><div class="card"><small>On-time Trips</small><h2>96.2%</h2></div></div>
+<div class="panel"><h3>Bus Routes</h3>
+<div class="activity">Route 01 — Warangal to Campus — 6:45 AM</div>
+<div class="activity">Route 02 — Hanamkonda to Campus — 7:00 AM</div>
+<div class="activity">Route 03 — Kazipet to Campus — 7:15 AM</div>
+</div></section>
+
+<section id="analytics" class="page">
+<h1>AI Student Analytics ✦</h1><p class="subtitle">Intelligent insights for student success.</p>
+<div class="ai-box"><h3>✦ AI-Powered Academic Insights</h3><p style="margin-top:8px">Sample analytics dashboard. Connect an AI model to generate real predictions.</p></div>
+<div class="stats"><div class="card"><small>Students at Risk</small><h2>24</h2></div><div class="card"><small>High Performers</small><h2>318</h2></div><div class="card"><small>Average Score</small><h2>78.4%</h2></div><div class="card"><small>Performance Trend</small><h2>+6.2%</h2></div></div>
+<div class="panel"><h3>AI Recommendations</h3><div class="alert">⚠ Contact students with attendance below 75%.</div><div class="alert">✦ Recommend extra academic support for students with declining marks.</div><div class="alert">✓ Identify high performers for recognition.</div></div>
+</section>
+
+<section id="assistant" class="page">
+<h1>SmartCampus AI Assistant ✦</h1><p class="subtitle">Ask questions about campus activities.</p>
+<div class="panel">
+<div class="ai-box"><h3>Hello! I am your Campus AI Assistant.</h3><p style="margin-top:8px">Ask me about attendance, student performance, examinations or campus services.</p></div>
+<input id="question" style="width:75%" placeholder="Ask your question..." onkeydown="if(event.key==='Enter')askAI()">
+<button class="action" onclick="askAI()">Ask AI</button>
+<div id="response" class="alert" style="display:none"></div>
+</div>
+</section>
+
+</div>
+<footer>SmartCampus AI · AI-Assisted Smart Campus Management System · Demo Project</footer>
+</main>
+</div>
+
+<script>
+function showPage(id,button){
+ document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+ document.getElementById(id).classList.add('active');
+ document.querySelectorAll('.sidebar button').forEach(b=>b.classList.remove('active'));
+ button.classList.add('active');
+}
+let count=4;
+function addStudent(){
+ const name=document.getElementById('studentName').value.trim();
+ const dept=document.getElementById('studentDept').value.trim();
+ if(!name||!dept){alert('Please enter student name and department');return;}
+ const row=document.createElement('tr');
+ row.innerHTML='<td>SC00'+count+'</td><td></td><td></td><td><span class="status">Active</span></td>';
+ row.cells[1].textContent=name;
+ row.cells[2].textContent=dept;
+ document.getElementById('studentTable').appendChild(row);
+ count++;
+ document.getElementById('studentName').value='';
+ document.getElementById('studentDept').value='';
+ alert('Student added successfully!');
+}
+function askAI(){
+ const q=document.getElementById('question').value.trim();
+ if(!q){alert('Please enter a question');return;}
+ const response=document.getElementById('response');
+ response.style.display='block';
+ response.textContent='Demo AI response: Based on the sample campus data, students with attendance below 75% should receive an alert and academic support. Your question was: '+q+'. Connect a real AI API to enable intelligent live answers.';
+ document.getElementById('question').value='';
+}
+</script>
+</body>
+</html>
